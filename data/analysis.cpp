@@ -1,40 +1,67 @@
+#include "analysis.h"
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 
+using namespace std;
 
-int main()
+Analysis::Analysis( string filename )
+    : _filename( filename )
+{
+}
+
+Analysis::~Analysis()
+{
+}
+
+double Analysis::getAverage()
+{   
+    if (_data.empty())
+    {
+        cout << "No data provided!" << endl;
+    }
+
+    int sum = 0;
+    for (int line: _data )
+    {
+        sum += line;
+    } 
+    _average = static_cast<double>( sum ) / _data.size();
+    cout << "The average is: " << _average << endl;
+    return _average;
+}
+
+void Analysis::showData()
 {
     try {
-
-        std::ifstream data("data.txt"); //input file stream - open to read
-        if ( !data  ){
+        ifstream file(_filename); //input file stream - open to read
+        if ( !file  ){
             throw std::runtime_error( "Error opening the file" );
         }
 
-        std::string line;
-        std::vector<std::string> lines;
-        
-        
-        while( std::getline( data, line ) )
+        string line;
+        int intValue;
+
+        while( getline( file, line ) )
         {
-            lines.push_back( line );
+            //cast string into int
+            intValue = stoi( line );
+            _data.push_back( intValue );
         }
         
-        data.close();
+        file.close();
 
-        for(const std::string& storedLine : lines)
+        for(const int& storedLine : _data)
         {
-            std::cout << storedLine << std::endl;
+            cout << storedLine << std::endl;
         }
            
     }
     catch( const std::exception& e )
     {
-        std::cerr << e.what() << '\n';
+        cerr << e.what() << '\n';
         
     }
-    
-    
 }

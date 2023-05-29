@@ -1,14 +1,15 @@
 #include <iostream>
 #include "serialport.h"
+#include "analysis.h"
 
 using namespace std;
 
 
 int main()
 {   
-
     int choice = -1;
     Serialport Arduino( "/dev/cu.usbmodem1401", "data.txt" );
+    Analysis Set1("data.txt");
 
     while ( choice != 0 )
     {
@@ -31,13 +32,13 @@ int main()
             Arduino.disconnect();
             break;
         case 2:
-            cout << "Data" << endl;
-
+            Set1.showData();
             //uzyj konstruktora kopiujacego do zachowania tego samego portu ale nowe dane chyba
             break;
         case 3:
             cout << "Average" << endl;
              // set floating-point output formatting
+            Set1.getAverage();
             // cout << fixed << setprecision( 2 );
             break;
         default:

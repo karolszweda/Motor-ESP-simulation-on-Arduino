@@ -9,7 +9,7 @@ using namespace std;
 class Serialport {
 
 public:
-Serialport( string, string);
+Serialport( string, string );
 
 void connect();
 
