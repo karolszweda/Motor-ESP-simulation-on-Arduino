@@ -15,19 +15,12 @@ void connect();
 
 void disconnect();
 
-void readSerial();
-
-// void showStream();
-
-// void showData();
-
-// double getAvg();
+void readSerial( int );
 
 private:
 string _port, _filename;
 int _fd;
 
 };
-
 
 #endif

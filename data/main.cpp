@@ -8,7 +8,7 @@ int main()
 {   
 
     int choice = -1;
-    Serialport Arduino( "/dev/cu.usbmodem1101", "data.txt" );
+    Serialport Arduino( "/dev/cu.usbmodem1401", "data.txt" );
 
     while ( choice != 0 )
     {
@@ -25,9 +25,9 @@ int main()
             cout << "Exitting" << endl;
             exit( EXIT_SUCCESS );
         case 1:
-            cout << "Serial port" << endl;
+            cout << "Serial port:" << endl;
             Arduino.connect();
-            Arduino.readSerial();
+            Arduino.readSerial(5);
             Arduino.disconnect();
             break;
         case 2:

@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+#define BUFF 5
+
 
 Serialport::Serialport(string port, string filename )
     : _port( port ), _filename( filename )
@@ -70,10 +72,11 @@ void Serialport::disconnect()
     }
 }
 
-void Serialport::readSerial()
+void Serialport::readSerial(int seconds)
 {   
     try
-    {
+    {   
+        
         std::ofstream outputFile( "data.txt" );
         if ( !outputFile.is_open() )
         {
@@ -81,18 +84,26 @@ void Serialport::readSerial()
         }
 
         //read data from serial port
-        char buff[5];
-        while ( 1 ) {
+        char buff[ BUFF ];
+        unsigned int time = seconds;
+        while ( true ) {
             sleep( 1 );
-            int n = read( _fd, buff, 5 );
-            if (n == -1)
+            int n = read( _fd, buff, BUFF );
+            if ( n == -1 )
             {
                 throw std::runtime_error( "Error reading from serial port" );
             }
-            if (n > 0) {
+            if ( n > 2 ) {   
+
                 outputFile << buff << std::endl;
                 printf( "Read %d bytes: %.*s\n", n, n, buff );
             }
+            std::cout << "Yoooooo" << std::endl; 
+            if (time-- == 0)
+            {
+                break;
+            };
+
         }
         outputFile.close();
     }
@@ -102,6 +113,5 @@ void Serialport::readSerial()
         disconnect();
         exit(EXIT_FAILURE);
     }
-    
     
 }
