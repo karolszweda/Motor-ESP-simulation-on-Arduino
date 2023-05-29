@@ -1,3 +1,5 @@
+#include "serialport.h"
+
 #include <iostream>
 #include <fstream>
 #include <fcntl.h>
@@ -5,28 +7,32 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-#define BDRATE  B9600
-#define BUFSIZE 5
 
-int main()
+Serialport::Serialport(string port, string filename )
+    : _port( port ), _filename( filename )
+{
+
+}
+
+void Serialport::connect()
 {
     try
     {
-        int fd = open( "/dev/cu.usbmodem1101", O_RDWR | O_NOCTTY | O_NDELAY );
-        if ( fd == -1 )
+        _fd = open( "/dev/cu.usbmodem1401", O_RDWR | O_NOCTTY | O_NDELAY );
+        if ( _fd == -1 )
         {
             throw std::runtime_error( "Error opening serial port" );
         }
             
         struct termios options;
         //configure serial port
-        if ( tcgetattr( fd, &options ) != 0 )
+        if ( tcgetattr( _fd, &options ) != 0 )
         {
             throw std::runtime_error( "Error getting serial port attributes" );
         }
 
         //set transmitton speed
-        if ( cfsetispeed( &options, BDRATE ) != 0 || cfsetospeed( &options, BDRATE ) != 0)
+        if ( cfsetispeed( &options, B9600 ) != 0 || cfsetospeed( &options, B9600 ) != 0)
         {
             throw std::runtime_error( "Error setting serial port baud rate" );
         }
@@ -42,12 +48,32 @@ int main()
         options.c_lflag &= ~( ICANON | ECHO | ECHOE | ISIG );
 
         //set above options now
-        if ( tcsetattr( fd, TCSANOW, &options ) != 0)
+        if ( tcsetattr( _fd, TCSANOW, &options ) != 0)
         {
             throw std::runtime_error( "Error setting setting serial port attributes" );
         }
+    }
+    catch( const std::exception& e )
+    {
+        std::cerr << e.what() << '\n';
+        disconnect();
+        exit(EXIT_FAILURE);
+    }
+}
 
-        //open destination file
+void Serialport::disconnect()
+{
+    if (close(_fd) == -1)
+    {
+        std::cerr << "Error closing serial port\n";
+        exit(EXIT_FAILURE);
+    }
+}
+
+void Serialport::readSerial()
+{   
+    try
+    {
         std::ofstream outputFile( "data.txt" );
         if ( !outputFile.is_open() )
         {
@@ -55,10 +81,10 @@ int main()
         }
 
         //read data from serial port
-        char buff[ BUFSIZE ];
+        char buff[5];
         while ( 1 ) {
             sleep( 1 );
-            int n = read( fd, buff, BUFSIZE );
+            int n = read( _fd, buff, 5 );
             if (n == -1)
             {
                 throw std::runtime_error( "Error reading from serial port" );
@@ -69,10 +95,13 @@ int main()
             }
         }
         outputFile.close();
-        close( fd );
     }
-    catch( const std::exception& e )
+    catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
+        disconnect();
+        exit(EXIT_FAILURE);
     }
+    
+    
 }

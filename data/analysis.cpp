@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
+
 
 int main()
 {
@@ -12,14 +14,20 @@ int main()
         }
 
         std::string line;
+        std::vector<std::string> lines;
+        
+        
         while( std::getline( data, line ) )
         {
-            std::cout << line << std::endl;
-            
-
+            lines.push_back( line );
         }
         
         data.close();
+
+        for(const std::string& storedLine : lines)
+        {
+            std::cout << storedLine << std::endl;
+        }
            
     }
     catch( const std::exception& e )
