@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-#define BUFF 5
+#define BUFF 8
 
 
 Serialport::Serialport(string port, string filename )
@@ -20,7 +20,8 @@ void Serialport::connect()
 {
     try
     {
-        _fd = open( "/dev/cu.usbmodem1401", O_RDWR | O_NOCTTY | O_NDELAY );
+        const char *port = _port.c_str();
+        _fd = open( port , O_RDWR | O_NOCTTY | O_NDELAY );
         if ( _fd == -1 )
         {
             throw std::runtime_error( "Error opening serial port" );
@@ -85,26 +86,39 @@ void Serialport::readSerial(int seconds)
 
         //read data from serial port
         char buff[ BUFF ];
+        string receivedData;
         unsigned int time = seconds;
         while ( true ) {
             sleep( 1 );
-            int n = read( _fd, buff, BUFF );
-            if ( n == -1 )
+            int bytes_read = read( _fd, buff, BUFF );
+            if ( bytes_read == -1 )
             {
                 throw std::runtime_error( "Error reading from serial port" );
             }
-            if ( n > 2 ) {   
+            if ( bytes_read > 0 ) {  
+                receivedData += string(buff, bytes_read);
 
-                outputFile << buff << std::endl;
-                printf( "Read %d bytes: %.*s\n", n, n, buff );
+                size_t found1 = receivedData.find("100"); 
+                size_t found2 = receivedData.find("050"); 
+
+                if( found1 != string::npos ){ 
+                    outputFile << buff;
+                    printf( "Read %d bytes: %.*s\n", bytes_read, bytes_read, buff );
+                    receivedData.erase(0, found1 + 1 );
+                } else if ( found2 != string::npos ) {
+                    outputFile << buff;
+                    printf( "Read %d bytes: %.*s\n", bytes_read, bytes_read, buff );
+                    receivedData.erase(0, found2 + 1);
+                } else {
+                    outputFile << "";
+                }
             }
-            std::cout << "Yoooooo" << std::endl; 
             if (time-- == 0)
             {
                 break;
-            };
-
-        }
+            }
+        } 
+        
         outputFile.close();
     }
     catch(const std::exception& e)

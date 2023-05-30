@@ -11,7 +11,7 @@ private:
     int _fd;
     double _average;
     std::string _filename;
-    std::vector<int> _data;
+    std::vector<int> *_data;
 
 
 public:

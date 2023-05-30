@@ -8,27 +8,28 @@
 using namespace std;
 
 Analysis::Analysis( string filename )
-    : _filename( filename )
+    : _filename( filename ), _data( new vector<int>() )
 {
 }
 
 Analysis::~Analysis()
 {
+    delete _data;
 }
 
 double Analysis::getAverage()
 {   
-    if (_data.empty())
+    if (_data->empty())
     {
         cout << "No data provided!" << endl;
     }
 
     int sum = 0;
-    for (int line: _data )
+    for (int line: *_data )
     {
         sum += line;
     } 
-    _average = static_cast<double>( sum ) / _data.size();
+    _average = static_cast<double>( sum ) / _data->size();
     cout << "The average is: " << _average << endl;
     return _average;
 }
@@ -46,14 +47,23 @@ void Analysis::showData()
 
         while( getline( file, line ) )
         {
-            //cast string into int
-            intValue = stoi( line );
-            _data.push_back( intValue );
+
+            // if ( line == "100" || line == "050")
+            // {
+                //cast string into int
+                intValue = stoi( line );
+                _data->push_back( intValue );
+            // }
+            // else
+            // {
+            //     throw std::runtime_error("Error converting to integer");
+            // }
+ 
         }
         
         file.close();
 
-        for(const int& storedLine : _data)
+        for(const int& storedLine : *_data)
         {
             cout << storedLine << std::endl;
         }
