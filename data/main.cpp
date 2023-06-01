@@ -7,9 +7,11 @@ using namespace std;
 
 int main()
 {   
-    int choice = -1;
     Serialport Arduino( "/dev/cu.usbmodem1401", "data.txt" );
     Analysis Set1("data.txt");
+
+    int choice = -1;
+    unsigned int time = 10;
 
     while ( choice != 0 )
     {
@@ -26,20 +28,19 @@ int main()
             cout << "Exitting" << endl;
             exit( EXIT_SUCCESS );
         case 1:
+            cout << "Enter time (seconds): "; cin >> time;
             cout << "Serial port:" << endl;
+
             Arduino.connect();
-            Arduino.readSerial(5);
+            Arduino.readSerial( time );
             Arduino.disconnect();
+
             break;
         case 2:
             Set1.showData();
-            //uzyj konstruktora kopiujacego do zachowania tego samego portu ale nowe dane chyba
             break;
         case 3:
-            cout << "Average" << endl;
-             // set floating-point output formatting
             Set1.getAverage();
-            // cout << fixed << setprecision( 2 );
             break;
         default:
             cout << "Incorrect choice!" << endl;

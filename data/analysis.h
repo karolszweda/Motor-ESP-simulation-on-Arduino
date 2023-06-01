@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 
-
 class Analysis
 {
 private:
@@ -12,7 +11,6 @@ private:
     double _average;
     std::string _filename;
     std::vector<int> *_data;
-
 
 public:
     Analysis( std::string );
@@ -23,5 +21,4 @@ public:
 
     ~Analysis();
 };
-
 #endif

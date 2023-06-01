@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Analysis::Analysis( string filename )
+Analysis::Analysis( string filename)
     : _filename( filename ), _data( new vector<int>() )
 {
 }
@@ -23,7 +23,7 @@ double Analysis::getAverage()
     {
         cout << "No data provided!" << endl;
     }
-
+    
     int sum = 0;
     for (int line: *_data )
     {
@@ -34,8 +34,11 @@ double Analysis::getAverage()
     return _average;
 }
 
+//void eraseSet...
+
 void Analysis::showData()
 {
+    cout << "Collected data set: " << endl;
     try {
         ifstream file(_filename); //input file stream - open to read
         if ( !file  ){
@@ -47,18 +50,8 @@ void Analysis::showData()
 
         while( getline( file, line ) )
         {
-
-            // if ( line == "100" || line == "050")
-            // {
-                //cast string into int
-                intValue = stoi( line );
-                _data->push_back( intValue );
-            // }
-            // else
-            // {
-            //     throw std::runtime_error("Error converting to integer");
-            // }
- 
+            intValue = stoi( line );
+            _data->push_back( intValue );
         }
         
         file.close();

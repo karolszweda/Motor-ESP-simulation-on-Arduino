@@ -1,11 +1,10 @@
-#include "serialport.h"
-
 #include <iostream>
 #include <fstream>
 #include <fcntl.h>
 #include <termios.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include "serialport.h"
 
 #define BUFF 8
 
@@ -13,7 +12,6 @@
 Serialport::Serialport(string port, string filename )
     : _port( port ), _filename( filename )
 {
-
 }
 
 void Serialport::connect()
@@ -73,11 +71,10 @@ void Serialport::disconnect()
     }
 }
 
-void Serialport::readSerial(int seconds)
+void Serialport::readSerial( int seconds )
 {   
     try
     {   
-        
         std::ofstream outputFile( "data.txt" );
         if ( !outputFile.is_open() )
         {
@@ -88,6 +85,7 @@ void Serialport::readSerial(int seconds)
         char buff[ BUFF ];
         string receivedData;
         unsigned int time = seconds;
+
         while ( true ) {
             sleep( 1 );
             int bytes_read = read( _fd, buff, BUFF );
@@ -117,8 +115,7 @@ void Serialport::readSerial(int seconds)
             {
                 break;
             }
-        } 
-        
+        }
         outputFile.close();
     }
     catch(const std::exception& e)
@@ -127,5 +124,4 @@ void Serialport::readSerial(int seconds)
         disconnect();
         exit(EXIT_FAILURE);
     }
-    
 }

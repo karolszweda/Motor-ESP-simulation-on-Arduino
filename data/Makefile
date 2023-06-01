@@ -1,15 +1,17 @@
-CFLAGS = -Wall -pedantic
-LFLAGS = -Wall -pedantic
-CO     = g++
+CFLAGS = -std=c++14 -Wall -pedantic 
+LFLAGS = -std=c++14 -Wall -pedantic 
+CO     = g++ 
 LD     = $(CO)
 
 NAME1  = main
+NAME2  = serialport
+NAME3  = analysis
 
 OBJS1  = $(NAME1).o
+OBJS2  = $(NAME2).o
+OBJS3  = $(NAME3).o
 
 EXEC1  = $(NAME1).x
-
-option = serial
 
 .PHONY: help
 help:
@@ -20,8 +22,8 @@ help:
 .PHONY: all 
 all: $(EXEC1) 
 
-$(EXEC1): $(OBJS1)
-	$(LD) $(LFAGS) -o $@ $^
+$(EXEC1): $(OBJS1) $(OBJS2) $(OBJS3)
+	$(LD) $(LFLAGS) -o $@ $^
 
 %.o: %.c %.h
 	$(CO) $(CFLAGS) -c $<
@@ -33,4 +35,4 @@ run-$(NAME1): $(EXEC1)
 
 .PHONY: clean
 clean: 
-	rm *.o *.x
+	rm -f *.o *.x
