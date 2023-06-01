@@ -7,9 +7,9 @@ Sensor::Sensor( char *pin )
    pinMode( pin, INPUT_PULLUP );
  }
 
-void Sensor::sendSerial()
+void Sensor::setPin( char *pin )
 {
-  // Serial.println( "sHI" );
+  _pin = pin;
 }
 bool Sensor::getValue()
 {
@@ -23,8 +23,7 @@ void Sensor::work()
 {
   if ( digitalRead( _pin ) == LOW ){
     _value = true;
-    //add led indicator
-    sendSerial();
+    // setPin();
   } else {
     _value = false;
   }

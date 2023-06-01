@@ -10,7 +10,7 @@ private:
     
 public: 
     Sensor( char* );
-    virtual void sendSerial() override; 
+    void setPin( char* ) override; 
     bool getValue(); //Read value from sensor
     void work();
 };

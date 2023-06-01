@@ -3,12 +3,18 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
 #include <vector>
 
 using namespace std;
 
 Analysis::Analysis( string filename)
     : _filename( filename ), _data( new vector<int>() )
+{
+}
+
+Analysis::Analysis( const Analysis& other )
+    : _filename( other._filename ), _data( other._data ) 
 {
 }
 
@@ -34,9 +40,20 @@ double Analysis::getAverage()
     return _average;
 }
 
-//void eraseSet...
+void Analysis::removeData()
+{
+    if (_data->empty())
+    {
+        cout << "No data left to remove" << endl;
+    } else {
+        _data->clear();
+        _data->shrink_to_fit();
+    }
+    
+    
+}
 
-void Analysis::showData()
+void Analysis::collectData()
 {
     cout << "Collected data set: " << endl;
     try {
@@ -51,15 +68,13 @@ void Analysis::showData()
         while( getline( file, line ) )
         {
             intValue = stoi( line );
-            _data->push_back( intValue );
+            if( intValue == 50 || intValue == 100 )
+            {
+                _data->push_back( intValue );
+            }
         }
         
         file.close();
-
-        for(const int& storedLine : *_data)
-        {
-            cout << storedLine << std::endl;
-        }
            
     }
     catch( const std::exception& e )
@@ -67,4 +82,23 @@ void Analysis::showData()
         cerr << e.what() << '\n';
         
     }
+}
+
+void Analysis::showData()
+{
+    cout << "Collected data: " << endl;
+    if (_data->empty())
+    {
+        cout << "No data to show" << endl;
+    } else {
+        for( const int& storedLine : *_data )
+        {
+            cout << storedLine << std::endl;
+        }
+    }
+}
+
+void Analysis::sortData()
+{
+    sort( _data->begin(), _data->end());
 }

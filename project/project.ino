@@ -10,15 +10,16 @@
 #define BTN_PIN A0
 
 Sensor button( BTN_PIN );
-Motor motorDC(MTR_SPEED, MTR_SPEED_PIN, MTR_DIR, MTR_DIR_PIN);
+Motor motorDC( MTR_SPEED, MTR_SPEED_PIN, MTR_DIR, MTR_DIR_PIN );
 ESP wheel( &button, &motorDC );
+Test LED();
 
 void setup() {
   Serial.begin( 9600 );
-  //implementacja ESP w Arduino a analiza danych za pomocą komputera GUI w qt
 }
 
 void loop() {
+
 
   motorDC.work();
   button.work();

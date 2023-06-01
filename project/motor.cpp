@@ -8,9 +8,9 @@ Motor::Motor( short int speed, short int speedPin, short int dir, short int dirP
   pinMode( _directionPin, OUTPUT );
 }
 
-void Motor::sendSerial()
+void Motor::setPin( char* dirPin)
 {
-  // Serial.println(getSpeed());
+  _directionPin = dirPin;
 }
 
 void Motor::setSpeed( short int speedPin, short int speed )
@@ -27,7 +27,7 @@ short int Motor::getSpeed()
 
 void Motor::setDirection( short int dirPin, short int dir )
 {
-  _directionPin = dirPin;
+  setPin( dirPin );
   _direction = dir;
   digitalWrite( _directionPin, _direction );
 

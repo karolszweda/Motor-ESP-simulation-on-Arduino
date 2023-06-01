@@ -12,7 +12,7 @@ private:
 public:
     Motor( short int, short int, short int, short int);
 
-    virtual void sendSerial() override;
+    void setPin( char* ) override;
 
     void setSpeed( short int, short int ); 
 

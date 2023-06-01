@@ -13,11 +13,19 @@ private:
     std::vector<int> *_data;
 
 public:
-    Analysis( std::string );
+    Analysis( const std::string );
+
+    Analysis( const Analysis& other );
 
     double getAverage();
 
+    void removeData();
+
+    void collectData();
+
     void showData();
+
+    void sortData();
 
     ~Analysis();
 };

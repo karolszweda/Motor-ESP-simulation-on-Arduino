@@ -4,10 +4,7 @@
 
 class Device {
 public:
-  virtual void sendSerial() = 0;
-  virtual ~Device();
-private:
-// static short int devices;
+  virtual void setPin( char *) = 0;
 };
 
 #endif

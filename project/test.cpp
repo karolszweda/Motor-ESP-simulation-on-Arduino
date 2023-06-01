@@ -14,3 +14,8 @@ void Test::led_work(){
   digitalWrite(LED_BUILTIN, LOW);
   delay(1000);
 }
+
+void Test::setPin( char *pin )
+{
+  _pin = atoi( pin ); 
+}

@@ -10,6 +10,8 @@ int main()
     Serialport Arduino( "/dev/cu.usbmodem1401", "data.txt" );
     Analysis Set1("data.txt");
 
+    Analysis Set1Copy( Set1 );
+
     int choice = -1;
     unsigned int time = 10;
 
@@ -19,6 +21,7 @@ int main()
         cout << "1 - show serial port stream" << endl;
         cout << "2 - show data" << endl;
         cout << "3 - calculate the average" << endl;
+        cout << "4 - remove data" << endl;
         cout << "0 - close" << endl;
         cout << "Enter your choice: "; cin >> choice;
 
@@ -37,10 +40,19 @@ int main()
 
             break;
         case 2:
+            Set1.collectData();
             Set1.showData();
             break;
         case 3:
             Set1.getAverage();
+            break;
+        case 4:
+            Set1.removeData();
+            break;
+        case 5:
+            Set1Copy.sortData();
+            Set1Copy.showData();
+            Set1Copy.removeData();
             break;
         default:
             cout << "Incorrect choice!" << endl;
