@@ -4,6 +4,6 @@ The primary objective of this project was to develop a system entirely based on 
 
 
 ## Project contains:
-1. Aduino files in "project" directory.
+1. Files to be compiled on Arduino UNO in "project" directory.
 2. Console app in "data" directory.
 
