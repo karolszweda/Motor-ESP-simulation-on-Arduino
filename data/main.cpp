@@ -11,6 +11,7 @@ int main()
     Analysis Set1("data.txt");
 
     Analysis Set1Copy( Set1 );
+    Analysis Set1Copy2;
 
     int choice = -1;
     unsigned int time = 10;
@@ -22,6 +23,8 @@ int main()
         cout << "2 - show data" << endl;
         cout << "3 - calculate the average" << endl;
         cout << "4 - remove data" << endl;
+        cout << "5 - Copy and sort" << endl;
+        cout << "6 - Add to data sets "<< endl;
         cout << "0 - close" << endl;
         cout << "Enter your choice: "; cin >> choice;
 
@@ -54,6 +57,10 @@ int main()
             Set1Copy.showData();
             Set1Copy.removeData();
             break;
+        case 6://nie dziala
+            Set1Copy2 = Set1 + Set1Copy;
+            Set1Copy2.showData();
+            Set1Copy2.removeData();
         default:
             cout << "Incorrect choice!" << endl;
             break;

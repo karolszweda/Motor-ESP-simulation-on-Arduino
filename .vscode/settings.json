@@ -4,6 +4,8 @@
         "deque": "cpp",
         "string": "cpp",
         "vector": "cpp",
-        "stdexcept": "cpp"
+        "stdexcept": "cpp",
+        "functional": "cpp",
+        "unordered_map": "cpp"
     }
 }

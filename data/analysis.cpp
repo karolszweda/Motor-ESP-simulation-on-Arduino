@@ -8,7 +8,12 @@
 
 using namespace std;
 
-Analysis::Analysis( string filename)
+Analysis::Analysis()
+    :_data( new vector<int>() )
+{
+
+}
+Analysis::Analysis( string filename )
     : _filename( filename ), _data( new vector<int>() )
 {
 }
@@ -49,8 +54,6 @@ void Analysis::removeData()
         _data->clear();
         _data->shrink_to_fit();
     }
-    
-    
 }
 
 void Analysis::collectData()
@@ -80,7 +83,6 @@ void Analysis::collectData()
     catch( const std::exception& e )
     {
         cerr << e.what() << '\n';
-        
     }
 }
 
@@ -100,5 +102,15 @@ void Analysis::showData()
 
 void Analysis::sortData()
 {
-    sort( _data->begin(), _data->end());
+    sort( _data->begin(), _data->end() );
 }
+
+//set1 + set2 = set3 (with all data from set one and two)
+Analysis Analysis::operator+(const Analysis& other) const
+{
+    Analysis combined( other );
+    combined._data->insert(combined._data->end(), _data->begin(), _data->end());
+    combined._data->insert(combined._data->end(), other._data->begin(), other._data->end());
+    return combined;
+}
+ 

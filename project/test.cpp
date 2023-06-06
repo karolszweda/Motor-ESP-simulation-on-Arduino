@@ -4,14 +4,14 @@
 
 
 Test::Test(int pin)
-  : _pin(pin)
+  : _pin( pin )
 {
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode( LED_BUILTIN, OUTPUT );
 }
 void Test::led_work(){
-  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite( LED_BUILTIN, HIGH );
   delay(1000);
-  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite( LED_BUILTIN, LOW );
   delay(1000);
 }
 

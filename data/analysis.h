@@ -7,12 +7,15 @@
 class Analysis
 {
 private:
+
     int _fd;
     double _average;
     std::string _filename;
     std::vector<int> *_data;
 
 public:
+    Analysis();
+
     Analysis( const std::string );
 
     Analysis( const Analysis& other );
@@ -26,6 +29,8 @@ public:
     void showData();
 
     void sortData();
+
+    Analysis operator+(const Analysis& other) const;
 
     ~Analysis();
 };

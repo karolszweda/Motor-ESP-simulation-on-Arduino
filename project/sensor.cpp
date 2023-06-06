@@ -23,7 +23,6 @@ void Sensor::work()
 {
   if ( digitalRead( _pin ) == LOW ){
     _value = true;
-    // setPin();
   } else {
     _value = false;
   }
