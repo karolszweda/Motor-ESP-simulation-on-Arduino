@@ -6,13 +6,14 @@
 #include <algorithm>
 #include <vector>
 
+
 using namespace std;
 
 Analysis::Analysis()
     :_data( new vector<int>() )
 {
-
 }
+
 Analysis::Analysis( string filename )
     : _filename( filename ), _data( new vector<int>() )
 {
@@ -105,12 +106,8 @@ void Analysis::sortData()
     sort( _data->begin(), _data->end() );
 }
 
-//set1 + set2 = set3 (with all data from set one and two)
-Analysis Analysis::operator+(const Analysis& other) const
+
+bool Analysis::operator==( const Analysis& other ) const
 {
-    Analysis combined( other );
-    combined._data->insert(combined._data->end(), _data->begin(), _data->end());
-    combined._data->insert(combined._data->end(), other._data->begin(), other._data->end());
-    return combined;
+    return _data == other._data;
 }
- 

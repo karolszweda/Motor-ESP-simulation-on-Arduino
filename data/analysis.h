@@ -30,7 +30,7 @@ public:
 
     void sortData();
 
-    Analysis operator+(const Analysis& other) const;
+    bool operator==( const Analysis& other ) const;
 
     ~Analysis();
 };

@@ -8,17 +8,19 @@ using namespace std;
 int main()
 {   
     Serialport Arduino( "/dev/cu.usbmodem1401", "data.txt" );
+
     Analysis Set1("data.txt");
 
     Analysis Set1Copy( Set1 );
-    Analysis Set1Copy2;
+
+    Analysis Set1Copy2( Set1Copy );
 
     int choice = -1;
     unsigned int time = 10;
 
     while ( choice != 0 )
     {
-        cout << "Possible options:" << endl;
+        cout << "\nPossible options:" << endl;
         cout << "1 - show serial port stream" << endl;
         cout << "2 - show data" << endl;
         cout << "3 - calculate the average" << endl;
@@ -57,10 +59,13 @@ int main()
             Set1Copy.showData();
             Set1Copy.removeData();
             break;
-        case 6://nie dziala
-            Set1Copy2 = Set1 + Set1Copy;
-            Set1Copy2.showData();
-            Set1Copy2.removeData();
+        case 6:
+            if( Set1Copy2 == Set1Copy ) {
+                cout << "The sets are ideantical" << endl;
+            } else {
+                cout << "The sets are not ideantical" << endl;
+            }
+            break;
         default:
             cout << "Incorrect choice!" << endl;
             break;
@@ -73,6 +78,7 @@ int main()
             cin.get();
         }
     }
-    
+
     return 0;
 }
+
