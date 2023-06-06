@@ -26,7 +26,7 @@ int main()
         cout << "3 - calculate the average" << endl;
         cout << "4 - remove data" << endl;
         cout << "5 - Copy and sort" << endl;
-        cout << "6 - Add to data sets "<< endl;
+        cout << "6 - Compare two data sets "<< endl;
         cout << "0 - close" << endl;
         cout << "Enter your choice: "; cin >> choice;
 
