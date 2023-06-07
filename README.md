@@ -7,3 +7,8 @@ The primary objective of this project was to develop a system entirely based on 
 1. Files to be compiled on Arduino UNO in "project" directory.
 2. Console app in "data" directory.
 
+### To run project:
+1. Change port name in "main.cpp" file to the port you connect with your Arduino.
+2. Go to data directory and use "make all" command to compile.
+3. Use "make run-main" to run project in terminal.
+
